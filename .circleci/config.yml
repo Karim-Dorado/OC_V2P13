@@ -1,0 +1,55 @@
+version: 2.1
+
+workflows:
+  build-deploy:
+    jobs:
+      - build-tests
+      - bundle_dependencies:
+          requires:
+            - build-tests
+      - deploy:
+          requires:
+            - build-tests
+            - build-push-docker-hub
+          pre-steps:
+            - heroku/install
+            - run:
+              command: |
+                heroku config:set SENTRY_URL=$SENTRY_URL -a oc-lettings
+                heroku config:set SECRET_KEY=$SECRET_KEY -a oc-lettings
+                heroku config:set DATABASE_URL=$DATABASE_URL -a oc-lettings
+                heroku config:set SQLITE_URL=$SQLITE_URL -a oc-lettings
+
+jobs:
+  build-tests:
+    docker:
+      - image: cimg/python:3.9.1
+    steps:
+      - checkout
+      - run:
+          name: Install Django and dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: Tests
+          command: pytest
+      - run:
+          name: Run linting
+          command: flake8
+
+build-push-docker-hub:
+    docker:
+      - image: cimg/python:3.10.1
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: $DOCKER_LOGIN/oc-lettings-image
+          extra_build_args: "-t $DOCKER_LOGIN/oc-lettings-image"
+          tag: $CIRCLE_SHA1
+      - docker/push:
+          image: $DOCKER_LOGIN/oc-lettings-image
+          tag: "latest"
+      - docker/push:
+          image: $DOCKER_LOGIN/oc-lettings-image
+          tag: $CIRCLE_SHA1
