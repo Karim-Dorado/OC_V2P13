@@ -13,7 +13,7 @@ workflows:
 jobs:
   build-push-docker-hub:
     docker:
-      - image: cimg/python:3.9.1
+      - image: circleci/python@sha256:bc92eef1a022b1fb31be7fbe71440cb5c4cdae3f0ddc2d2a78352a3c1a589c72
     steps:
       - setup_remote_docker
       - checkout
