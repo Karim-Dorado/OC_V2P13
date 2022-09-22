@@ -8,21 +8,7 @@ workflows:
   deploy:
     jobs:
       - build-tests
-      - build-push-docker-hub:
-          requires:
-            - build-tests
-      - deploy:
-          requires:
-            - build-tests
-            - build-push-docker-hub
-          pre-steps:
-            - heroku/install
-            - run:
-              command: |
-                heroku config:set SENTRY_URL=$SENTRY_URL -a oc-lettings
-                heroku config:set SECRET_KEY=$SECRET_KEY -a oc-lettings
-                heroku config:set DATABASE_URL=$DATABASE_URL -a oc-lettings
-                heroku config:set SQLITE_URL=$SQLITE_URL -a oc-lettings
+
 
 jobs:
   build-tests:
