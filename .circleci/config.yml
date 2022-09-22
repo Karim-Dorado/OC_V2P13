@@ -4,7 +4,7 @@ workflows:
   build-deploy:
     jobs:
       - build-tests
-      - bundle_dependencies:
+      - build-push-docker-hub:
           requires:
             - build-tests
       - deploy:
