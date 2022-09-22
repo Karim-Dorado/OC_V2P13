@@ -38,7 +38,7 @@ jobs:
 
 build-push-docker-hub:
     docker:
-      - image: cimg/python:3.10.1
+      - image: cimg/python:3.9.1
     steps:
       - setup_remote_docker
       - checkout
