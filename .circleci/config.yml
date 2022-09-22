@@ -20,9 +20,6 @@ jobs:
           name: Install Django and dependencies
           command: pip install -r requirements.txt
       - run:
-          name: Tests
-          command: pytest
-      - run:
           name: Run linting
           command: flake8
 
