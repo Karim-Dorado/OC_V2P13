@@ -37,6 +37,7 @@ jobs:
           password: $DOCKER_PASSWORD
     steps:
       - checkout
+
       # build and push Docker image
       - run: |
           docker build -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
