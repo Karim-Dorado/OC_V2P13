@@ -3,23 +3,43 @@ version: 2.1
 orbs: 
   heroku: circleci/heroku@1.2.6
   docker: circleci/docker@2.0.1
-
+  
 workflows:
-  deploy:
+  build-deploy:
     jobs:
-      - build-push-docker-hub
-
+      - build-tests
+      - build-push-docker-hub:
+          requires:
+            - build-tests
+      - deploy:
+          requires:
+            - build-tests
+            - build-push-docker-hub
+          pre-steps:
+            - heroku/install
+            - run:
+              command: |
+                heroku config:set SENTRY_URL=$SENTRY_URL -a oc-lettings
+                heroku config:set SECRET_KEY=$SECRET_KEY -a oc-lettings
+                heroku config:set DATABASE_URL=$DATABASE_URL -a oc-lettings
+                heroku config:set SQLITE_URL=$SQLITE_URL -a oc-lettings
 
 jobs:
-  build-push-docker-hub:
+  build-tests:
     docker:
-      - image: circleci/python@sha256:bc92eef1a022b1fb31be7fbe71440cb5c4cdae3f0ddc2d2a78352a3c1a589c72
+      - image: cimg/python:3.9.1
     steps:
-      - setup_remote_docker
       - checkout
-      - docker/check
-      - docker/build:
-          image: $DOCKER_LOGIN/oc-lettings-image
-      - docker/push:
-          image: $DOCKER_LOGIN/oc-lettings-image
-          tag: "latest"
+      - run:
+          name: Install Django and dependencies
+          command: pip install -r requirements.txt
+      - run:
+          command: |
+            echo $DJANGO_DEBUG
+            echo $DJANGO_SECRET_KEY
+      - run:
+          name: Tests
+          command: pytest
+      - run:
+          name: Run linting
+          command: flake8
