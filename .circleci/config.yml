@@ -10,7 +10,7 @@ workflows:
       - tests_and_linting
       - docker_build_and_push:
           requires:
-            - test_and_lint
+            - tests_and_linting
 
 jobs:
   tests_and_linting:
