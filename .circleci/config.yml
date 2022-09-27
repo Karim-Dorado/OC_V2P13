@@ -9,8 +9,8 @@ workflows:
     jobs:
       - tests
       - docker_build_and_push:
-        requires:
-          - tests
+          requires:
+            - tests
 
 jobs:
   tests:
