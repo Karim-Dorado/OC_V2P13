@@ -7,10 +7,13 @@ orbs:
 workflows:
   build-deploy:
     jobs:
-      - build-tests
+      - tests_and_linting
+      - docker_build_and_push:
+          requires:
+            - test_and_lint
 
 jobs:
-  build-tests:
+  tests_and_linting:
     docker:
       - image: cimg/python:3.9.1
     steps:
