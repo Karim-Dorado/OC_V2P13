@@ -11,6 +11,9 @@ workflows:
       - docker_build_and_push:
           requires:
             - tests
+      - deploy_to_heroku:
+          requires:
+            - docker_build_and_push
 
 jobs:
   tests:
