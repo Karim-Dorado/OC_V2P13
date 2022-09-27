@@ -7,13 +7,13 @@ orbs:
 workflows:
   build-deploy:
     jobs:
-      - tests_and_linting
+      - tests
       - docker_build_and_push:
-          requires:
-            - tests_and_linting
+        requires:
+          - tests
 
 jobs:
-  tests_and_linting:
+  tests:
     docker:
       - image: cimg/python:3.9.1
     steps:
@@ -40,6 +40,10 @@ jobs:
           password: $DOCKER_PASSWORD
     steps:
       - checkout
+
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
 
       # build and push Docker image
       - run: |
