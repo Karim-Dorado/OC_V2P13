@@ -4,7 +4,7 @@ from django.urls import path, include
 from . import views
 
 
-def trigger_error(request):
+def zero_division_error(request):
     return 1 / 0
 
 
@@ -13,5 +13,5 @@ urlpatterns = [
     path('lettings/', include(('lettings.urls', 'lettings'), namespace='lettings')),
     path('profiles/', include(('profiles.urls', 'profiles'), namespace='profiles')),
     path('admin/', admin.site.urls),
-    path('sentry-debug/', trigger_error),
+    path('sentry-debug/', zero_division_error),
 ]
