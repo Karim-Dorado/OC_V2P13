@@ -110,7 +110,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 sentry_sdk.init(
-    dsn="https://d3849ae67ae4432f97c9d1a87747e8da@o4503937467744256.ingest.sentry.io/4503937472790528",
+    dsn=env('SENTRY'),
     integrations=[
         DjangoIntegration(),
     ],
