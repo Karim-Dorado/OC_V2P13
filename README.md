@@ -88,4 +88,7 @@ Lors de ce push, le pipeline effectue les actions suivantes :
 Le déploiement ne peut s'effectuer que si aucune erreur n'est relevée lors de la phase de tests et de la création de l'image Docker.
 
 Pour créer une image Docker, un fichier Dockerfile se trouve à la racine du projet.
+
 Le fichier de configuration de circleCI se trouve quant à lui dans le répertoire .circleci/config.yml
+
+Pour accéder au site sur Heroku, veuillez entrer l'addresse suivante : https://kd-oc-lettings.herokuapp.com/
