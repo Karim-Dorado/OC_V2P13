@@ -75,3 +75,17 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+### Déploiement
+
+Le déploiement du site s'effectue via un pipeline CI/CD, en utilisant CircleCI et Heroku. Il s'effectue automatiquement lors d'un "push" git de la branche main vers le repository sur GitHub. 
+
+Lors de ce push, le pipeline effectue les actions suivantes :
+- Tests de l'application, ainsi que le linting. 
+- Création d'une image Docker et "push" vers le DockerHub.
+- Déploiement sur Heroku.
+
+Le déploiement ne peut s'effectuer que si aucune erreur n'est relevée lors de la phase de tests et de la création de l'image Docker.
+
+Pour créer une image Docker, un fichier Dockerfile se trouve à la racine du projet.
+Le fichier de configuration de circleCI se trouve quant à lui dans le répertoire .circleci/config.yml
