@@ -12,7 +12,11 @@ environ.Env.read_env()
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', 'kd-oc-lettings.herokuapp.com','karim-dorado-oc-lettings.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'localhost',
+                 '0.0.0.0',
+                 'kd-oc-lettings.herokuapp.com',
+                 'karim-dorado-oc-lettings.herokuapp.com']
 
 
 # Application definition
