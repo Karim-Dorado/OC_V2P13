@@ -5,6 +5,10 @@ orbs:
   docker: circleci/docker@2.0.1
 
 workflows:
+  filters:
+    branches:
+      only:
+        - main
   build-deploy:
     jobs:
       - tests
