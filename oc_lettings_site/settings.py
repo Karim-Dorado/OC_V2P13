@@ -15,7 +15,8 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ['127.0.0.1',
                  'localhost',
                  '0.0.0.0',
-                 'kd-oc-lettings.herokuapp.com']
+                 'kd-oc-lettings.herokuapp.com',
+                 'karim-dorado-oc-lettings.herokuapp.com']
 
 
 # Application definition
